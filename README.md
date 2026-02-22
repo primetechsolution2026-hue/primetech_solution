@@ -13,7 +13,7 @@ pnpm dev
 # or
 bun dev
 ```
-
+primetech_solution2026!
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
@@ -34,3 +34,46 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
+theme:
+
+🎨 Primary Brand Colors
+🔵 Tech Blue (Primary)
+
+Hex: #1F4F8F
+
+RGB: 31, 79, 143
+
+Used for the main body of the P
+
+Represents: trust, technology, professionalism
+
+🔷 Gradient Blue
+
+Hex: #2E7BBE
+
+RGB: 46, 123, 190
+
+Mid-gradient transition color
+
+Adds depth and modern tech feel
+
+🟢 Teal / Cyber Green
+
+Hex: #2DB7A3
+
+RGB: 45, 183, 163
+
+Used on circuit lines and glow areas
+
+Represents innovation & digital solutions
+
+🟢 Neon Tech Green (Accent Glow)
+
+Hex: #58D6B2
+
+RGB: 88, 214, 178
+
+Highlight color for futuristic effect
