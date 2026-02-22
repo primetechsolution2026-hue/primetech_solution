@@ -19,8 +19,159 @@
   }
 }
 
+* { scroll-behavior: smooth; }
+
+.gradient-soft {
+  background: radial-gradient(1200px circle at 20% 10%, rgba(59,130,246,0.10), transparent 55%),
+              radial-gradient(900px circle at 80% 0%, rgba(37,99,235,0.10), transparent 50%);
+}
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto);
+}
+
+
+/* CUSTOM CSS */
+/* ── Navbar ── */
+.pt-nav-link {
+  color: rgba(200, 220, 255, 0.75);
+  transition: color 0.2s;
+}
+.pt-nav-link:hover {
+  color: #58D6B2;
+}
+
+.pt-btn-primary {
+  background: linear-gradient(135deg, #1F4F8F 0%, #2E7BBE 100%);
+  box-shadow: 0 0 20px rgba(46, 123, 190, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  border: 1px solid rgba(88, 214, 178, 0.3);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.pt-btn-primary:hover {
+  background: linear-gradient(135deg, #2E7BBE 0%, #2DB7A3 100%);
+  box-shadow: 0 0 28px rgba(45, 183, 163, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.pt-btn-ghost {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(88, 214, 178, 0.25);
+  color: #58D6B2;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.pt-btn-ghost:hover {
+  background: rgba(88, 214, 178, 0.08);
+  box-shadow: 0 0 16px rgba(88, 214, 178, 0.15);
+}
+
+/* ── Cards ── */
+.pt-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(46, 123, 190, 0.18);
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  transition: border 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.pt-card:hover {
+  border-color: rgba(45, 183, 163, 0.4);
+  box-shadow: 0 0 30px rgba(45, 183, 163, 0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+  transform: translateY(-4px);
+}
+
+/* ── Service cards (each has a teal accent by default) ── */
+.pt-service-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(46, 123, 190, 0.18);
+  backdrop-filter: blur(8px);
+  transition: border 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.pt-service-card:hover {
+  border-color: rgba(88, 214, 178, 0.35);
+  box-shadow: 0 0 30px rgba(88, 214, 178, 0.12);
+  transform: translateY(-4px);
+}
+
+/* ── Portfolio articles ── */
+.pt-article {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(46, 123, 190, 0.2);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: border 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.pt-article:hover {
+  border-color: rgba(45, 183, 163, 0.4);
+  box-shadow: 0 0 30px rgba(45, 183, 163, 0.15), 0 8px 30px rgba(0,0,0,0.4);
+  transform: translateY(-4px);
+}
+
+/* ── Team cards ── */
+.pt-team-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(46, 123, 190, 0.18);
+  backdrop-filter: blur(8px);
+  transition: border 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.pt-team-card:hover {
+  border-color: rgba(45, 183, 163, 0.4);
+  box-shadow: 0 0 25px rgba(45, 183, 163, 0.15);
+  transform: translateY(-4px);
+}
+
+/* ── Footer links ── */
+.pt-footer-link {
+  color: rgba(180, 210, 240, 0.55);
+  transition: color 0.2s;
+}
+.pt-footer-link:hover {
+  color: #58D6B2;
+}
+
+.pt-footer-social {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(46, 123, 190, 0.2);
+  color: rgba(180, 210, 240, 0.6);
+  transition: border 0.2s, color 0.2s;
+}
+.pt-footer-social:hover {
+  border-color: rgba(88, 214, 178, 0.4);
+  color: #58D6B2;
+}
+
+/* ── Contact inputs ── */
+.pt-input {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(46, 123, 190, 0.25);
+  color: #e8f4ff;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.pt-input:focus {
+  outline: none;
+  border-color: rgba(88, 214, 178, 0.5);
+  box-shadow: 0 0 0 3px rgba(88, 214, 178, 0.1);
+}
+.pt-input::placeholder {
+  color: rgba(180, 210, 240, 0.3);
+}
+
+.pt-btn-submit {
+  background: linear-gradient(135deg, #1F4F8F 0%, #2E7BBE 60%, #2DB7A3 100%);
+  box-shadow: 0 0 24px rgba(46, 123, 190, 0.4), 0 4px 12px rgba(0,0,0,0.3);
+  border: 1px solid rgba(88, 214, 178, 0.2);
+  transition: box-shadow 0.2s;
+}
+.pt-btn-submit:hover {
+  box-shadow: 0 0 32px rgba(45, 183, 163, 0.5), 0 4px 16px rgba(0,0,0,0.3);
+}
+
+/* ── Hero secondary button ── */
+.pt-btn-outline {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(88, 214, 178, 0.25);
+  color: #58D6B2;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.pt-btn-outline:hover {
+  background: rgba(88, 214, 178, 0.08);
+  box-shadow: 0 0 16px rgba(88, 214, 178, 0.15);
 }
