@@ -35,10 +35,10 @@ export const projects: Record<string, Project> = {
     ],
     tech: ["React.js", "Material-UI", "Mysql", "RESTful APIs", "Node.js"],
     highlights: [
+      { label: "Dashboard Analytics", detail: "Centralized overview of occupancy rates, revenue summaries, booking trends, and staff activity — updated in real time for informed front-desk and management decisions." },
       { label: "Check-in / Check-out", detail: "Streamlined front-desk flows with real-time room status updates." },
-      { label: "Online Booking", detail: "Direct booking engine with availability calendar and payment gateway." },
-      { label: "Employee Scheduling", detail: "Drag-and-drop shift planner with conflict detection." },
-      { label: "Payroll Integration", detail: "Automated payroll computation linked to attendance records." },
+      { label: "Employee Scheduling", detail: "Manual / Auto Generate schedule with conflict detection." },
+      { label: "Payroll", detail: "Automated payroll computation linked to attendance records." },
       { label: "Biometric Attendance", detail: "Hardware integration for fingerprint-based time tracking." },
     ],
     year: "March 2024",
@@ -46,21 +46,29 @@ export const projects: Record<string, Project> = {
     liveUrl: "", // Add link if deployed online, leave empty for local-only
   },
 
-  "fintrack-analytics": {
-    slug: "fintrack-analytics",
-    tag: "Web Application",
-    title: "FinTrack Analytics",
-    subtitle: "Real-time financial dashboard processing millions of data points per minute.",
-    desc: "Real-time financial dashboard processing millions of data points per minute.",
-    coverImage: "/images/work-2.png",
-    gallery: ["/images/work-2.png"],
-    tech: ["React.js", "D3.js", "WebSockets", "TypeScript"],
-    highlights: [
-      { label: "Real-time Data", detail: "Streaming millions of data points per minute via WebSockets." },
-      { label: "Interactive Charts", detail: "Custom D3 visualizations for portfolio analytics." },
+"coming-soon": {
+    slug: "coming-soon",
+    tag: "Coming Soon",
+    title: "Coming Soon",
+    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    coverImage: "/images/placeholder.png",
+    gallery: [
+      "/images/placeholder.png",
+      "/images/placeholder.png",
+      "/images/placeholder.png",
+      "/images/placeholder.png",
+      "/images/placeholder.png",
+      "/images/placeholder.png",
+      "/images/placeholder.png"
     ],
-    year: "2023",
-    duration: "4 months",
+    tech: ["Lorem", "Ipsum", "Dolor", "Sit"],
+    highlights: [
+      { label: "Lorem Ipsum", detail: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium." },
+      { label: "Dolor Sit Amet", detail: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit." },
+    ],
+    year: "2024",
+    duration: "TBD",
   },
 
   "horizon-real-estate": {
@@ -69,8 +77,15 @@ export const projects: Record<string, Project> = {
     title: "Horizon Real Estate",
     subtitle: "Complete rebranding and custom CMS development for a luxury property firm.",
     desc: "Complete rebranding and custom CMS development for a luxury property firm.",
-    coverImage: "/images/work-3.png",
-    gallery: ["/images/work-3.png"],
+    coverImage: "/images/placeholder.png",
+    gallery: [
+      "/images/placeholder.png",
+      "/images/placeholder.png",
+      "/images/placeholder.png",
+      "/images/placeholder.png",
+      "/images/placeholder.png",
+      "/images/placeholder.png"
+    ],
     tech: ["Next.js", "Tailwind CSS", "Sanity CMS", "Framer Motion"],
     highlights: [
       { label: "Custom CMS", detail: "Fully headless CMS enabling non-technical editors to manage listings." },
@@ -79,6 +94,7 @@ export const projects: Record<string, Project> = {
     year: "2023",
     duration: "3 months",
   },
+
 };
 
 // Array export — used by FeaturedWork and any other listing component

@@ -198,7 +198,7 @@ export default function CaseStudyPage() {
                     {project.title}
                   </h1>
                   <p className="mt-4 text-base text-blue-200/60 leading-relaxed max-w-lg">
-                    {project.desc}
+                    {project.subtitle}
                   </p>
 
                   <div className="mt-8 grid grid-cols-2 gap-4">
