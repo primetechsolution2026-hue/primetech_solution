@@ -2,9 +2,23 @@ import { Container } from "../components/Container";
 import Image from "next/image";
 
 const projects = [
-  { tag: "E-Commerce", title: "Lumina Storefront", desc: "A headless Shopify implementation resulting in a 40% increase in mobile conversion.", image: "/images/work-1.png" },
-  { tag: "Web Application", title: "FinTrack Analytics", desc: "Real-time financial dashboard processing millions of data points per minute.", image: "/images/work-2.png" },
-  { tag: "Corporate Website", title: "Horizon Real Estate", desc: "Complete rebranding and custom CMS development for a luxury property firm.", image: "/images/work-3.png" },
+  { 
+    tag: "Property Management System", 
+    title: "Logita Heights Hotel", 
+    desc: "Built a Property Management System using React.js and Material-UI (MUI). Developed features like Check-in/Check-out, online booking, employee scheduling, payroll, and biometric attendance tracking. Designed responsive UIs, integrated RESTful APIs, and collaborated with backend teams to optimize performance. Delivered a scalable, user-friendly solution that enhanced operational efficiency.", 
+    image: "/portfolio/pms/dashboard.png" 
+  },
+  { 
+    tag: "Web Application", 
+    title: "FinTrack Analytics", 
+    desc: "Real-time financial dashboard processing millions of data points per minute.", 
+    image: "/images/work-2.png" 
+  },
+  { 
+    tag: "Corporate Website", 
+    title: "Horizon Real Estate", 
+    desc: "Complete rebranding and custom CMS development for a luxury property firm.", 
+    image: "/images/work-3.png" },
 ];
 
 export function FeaturedWork() {
