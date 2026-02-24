@@ -9,7 +9,7 @@ const team = [
   { name: "Eduardo Macabacyao Jr.", role: "Sr. BackEnd Developer", image: "/team/user1.png" },
   { name: "Marco Pantonial", role: "Sr. BackEnd Developer", image: "/team/user1.png" },
   { name: "Josuer L. Bague", role: "Sr. Fullstack Developer", image: "/team/user2.png" },
-  { name: "Mark Gulbin Nim", role: "Wordpress Developer", image: "/team/user1.png" },
+  { name: "Mark Gulbin Nim", role: "Wordpress Developer", image: "/team/MarkNim.png" },
   { name: "Nening B.", role: "Quality Assurance (QA)", image: "/team/user3.png" },
 ];
 
