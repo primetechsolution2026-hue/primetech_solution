@@ -47,12 +47,14 @@ export function Navbar() {
             >
               Contact Us
             </a>
-            <a
-              href="#contact"
+
+            {/* ✅ Changed: now navigates to the quotation page */}
+            <Link
+              href="/pages/quote"
               className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-600 hover:to-teal-500 border border-teal-400/30 shadow-lg shadow-blue-900/40 transition-all duration-200"
             >
               Get a Quote
-            </a>
+            </Link>
           </div>
         </div>
       </Container>
