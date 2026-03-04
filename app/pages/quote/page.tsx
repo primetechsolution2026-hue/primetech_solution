@@ -45,7 +45,7 @@ export default function Page() {
       </section>
 
       {/* MAIN CONTENT */}
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      <main className="max-w-6xl mx-auto px-3 py-12">
         <QuoteBuilder />
       </main>
 

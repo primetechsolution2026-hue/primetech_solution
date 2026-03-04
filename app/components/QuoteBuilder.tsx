@@ -67,7 +67,7 @@ export default function QuoteBuilder() {
 
       {/* ── LEFT: Feature Picker ── */}
       <section className="bg-[#0a1535] border border-[#1a2d6b] rounded-2xl overflow-hidden shadow-xl shadow-blue-950/50">
-        <div className="flex items-center justify-between px-6 py-5 border-b border-[#1a2d6b] bg-[#0d1a45]">
+        <div className="flex items-center justify-between px-3 px-lg-6 py-5 border-b border-[#1a2d6b] bg-[#0d1a45]">
           <div>
             <h2 className="text-white font-bold text-lg tracking-tight">Configure Package</h2>
             <p className="text-slate-500 text-xs mt-0.5">Select what your project needs</p>
@@ -87,7 +87,7 @@ export default function QuoteBuilder() {
             const icon = CATEGORY_ICONS[cat] ?? "◆";
 
             return (
-              <div key={cat} className="px-6 py-5">
+              <div key={cat} className="px-3 px-lg-6 py-5">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2.5">
                     <span className="text-base leading-none">{icon}</span>
@@ -157,12 +157,12 @@ export default function QuoteBuilder() {
 
       {/* ── RIGHT: Quote Summary ── */}
       <aside className="sticky top-20 bg-[#0a1535] border border-[#1a2d6b] rounded-2xl overflow-hidden shadow-xl shadow-blue-950/50">
-        <div className="bg-gradient-to-r from-[#0d1a45] to-[#0a1535] px-6 py-5 border-b border-[#1a2d6b]">
+        <div className="bg-gradient-to-r from-[#0d1a45] to-[#0a1535] px-3 px-lg-6 py-5 border-b border-[#1a2d6b]">
           <h2 className="text-white font-bold text-lg tracking-tight">Your Estimate</h2>
           <p className="text-slate-500 text-xs mt-0.5">Real-time pricing breakdown</p>
         </div>
 
-        <div className="px-6 py-5 border-b border-[#111f4d]">
+        <div className="px-3 px-lg-6 py-5 border-b border-[#111f4d]">
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-gradient-to-br from-[#0d1a45] to-[#0a1535] border border-[#1a2d6b] rounded-xl p-4">
               <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider mb-1">One-time</p>
@@ -181,7 +181,7 @@ export default function QuoteBuilder() {
           </p>
         </div>
 
-        <div className="px-6 py-5 border-b border-[#111f4d]">
+        <div className="px-3 px-lg-6 py-5 border-b border-[#111f4d]">
           <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-3">
             Included in Quote
           </h3>
@@ -202,7 +202,7 @@ export default function QuoteBuilder() {
           </ul>
         </div>
 
-        <div className="px-6 py-5 grid gap-3">
+        <div className="px-3 px-lg-6 py-5 grid gap-3">
           <button
             onClick={() => window.print()}
             className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-bold text-sm py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-blue-900/40 hover:shadow-blue-700/40 hover:-translate-y-0.5"
@@ -213,8 +213,7 @@ export default function QuoteBuilder() {
             Send Inquiry →
           </button>
         </div>
-      </aside>
-
+      </aside> 
     </div>
   );
 }

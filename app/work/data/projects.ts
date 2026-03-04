@@ -22,7 +22,7 @@ export const projects: Record<string, Project> = {
   "logita-heights-hotel": {
     slug: "logita-heights-hotel",
     tag: "Property Management System",
-    title: "Logita Heights Hotel",
+    title: "Logita Heights Hotel fgfg",
     subtitle: "A full-featured hotel PMS built for scale and simplicity.",
     desc: "Built a Property Management System using React.js and Material-UI (MUI). Developed features like Check-in/Check-out, online booking, employee scheduling, payroll, and biometric attendance tracking. Designed responsive UIs, integrated RESTful APIs, and collaborated with backend teams to optimize performance. Delivered a scalable, user-friendly solution that enhanced operational efficiency.",
     coverImage: "/portfolio/pms/dashboard.png",
@@ -46,29 +46,40 @@ export const projects: Record<string, Project> = {
     liveUrl: "", // Add link if deployed online, leave empty for local-only
   },
 
-"coming-soon": {
-    slug: "coming-soon",
-    tag: "Coming Soon",
-    title: "Coming Soon",
-    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    coverImage: "/images/placeholder.png",
+  "PetHaven": {
+    slug: "PetHaven",
+    tag: "Demo Project",
+    title: "PetHaven – Pet Adoption Demo Website",
+    subtitle: "A modern UI concept for a pet adoption and pet services platform.",
+    desc: "PetHaven is a demo landing page concept for a pet adoption and pet services platform. The design demonstrates how a modern pet marketplace website can present pets available for adoption, categories of animals, and additional services such as grooming, veterinary care, and training. The interface focuses on clean layout, friendly visuals, and easy navigation to help users quickly find their ideal companion. This project is intended for UI/UX demonstration and portfolio purposes only and does not represent a real or functional adoption platform.",
+    coverImage: "/portfolio/pethaven/image1.png",
     gallery: [
-      "/images/placeholder.png",
-      "/images/placeholder.png",
-      "/images/placeholder.png",
-      "/images/placeholder.png",
-      "/images/placeholder.png",
-      "/images/placeholder.png",
-      "/images/placeholder.png"
+      "/portfolio/pethaven/image1.png",
+      "/portfolio/pethaven/image2.png",
+      "/portfolio/pethaven/image3.png",
+      "/portfolio/pethaven/image4.png",
     ],
-    tech: ["Lorem", "Ipsum", "Dolor", "Sit"],
+    tech: ["Figma", "UI/UX Design", "Responsive Design", "Next.js", "Tailwind CSS"],
     highlights: [
-      { label: "Lorem Ipsum", detail: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium." },
-      { label: "Dolor Sit Amet", detail: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit." },
+      {
+        label: "Pet Discovery Interface",
+        detail: "Designed a user-friendly layout that allows visitors to easily browse pets by categories such as dogs, cats, birds, and small animals."
+      },
+      {
+        label: "Service Integration Concept",
+        detail: "Included sections for grooming, veterinary care, and training services to simulate a complete pet-care ecosystem within one platform."
+      },
+      {
+        label: "Featured Pets Showcase",
+        detail: "Interactive card-style layout displaying pets available for adoption with key details like breed, age, and vaccination status."
+      },
+      {
+        label: "Clean & Friendly Visual Design",
+        detail: "Soft colors, rounded elements, and pet-focused imagery create an approachable and welcoming user experience."
+      }
     ],
-    year: "2024",
-    duration: "TBD",
+    year: "2026",
+    duration: "Concept Design",
   },
 
   "horizon-real-estate": {
