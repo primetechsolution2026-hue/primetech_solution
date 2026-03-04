@@ -80,6 +80,7 @@ export const projects: Record<string, Project> = {
     ],
     year: "2026",
     duration: "Concept Design",
+    liveUrl: "https://primetech-pethaven-demo.vercel.app/", 
   },
 
   "horizon-real-estate": {
