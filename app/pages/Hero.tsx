@@ -48,7 +48,7 @@ export function Hero() {
             </div>
 
             <div className="mt-10 flex items-center gap-8">
-              {[["150+", "Projects"], ["99%", "Satisfaction"], ["24/7", "Support"]].map(([num, label]) => (
+              {[["1", "Projects"], ["99%", "Satisfaction"], ["24/7", "Support"]].map(([num, label]) => (
                 <div key={label}>
                   <p className="text-xl font-extrabold text-teal-400">{num}</p>
                   <p className="text-xs text-blue-200/60">{label}</p>

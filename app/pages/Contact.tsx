@@ -22,9 +22,10 @@ export function Contact() {
 
             <div className="mt-10 space-y-4">
               {[
-                { label: "Visit Us", lines: ["1200 Innovation Drive", "San Francisco, CA 94103"], icon: "📍" },
-                { label: "Email Us", lines: ["primetechsolution2026@gmail.com", "support@primetech.solutions"], icon: "✉️" },
-                { label: "Call Us", lines: ["+1 (555) 123-4567", "Mon–Fri, 9am–6pm PST"], icon: "📞" },
+                // { label: "Visit Us", lines: ["1200 Innovation Drive", "San Francisco, CA 94103"], icon: "📍" },
+                  { label: "Email Us", lines: ["primetechsolution2026@gmail.com"], icon: "✉️" },
+                // { label: "Email Us", lines: ["primetechsolution2026@gmail.com", "support@primetech.solutions"], icon: "✉️" },
+                { label: "Call Us", lines: ["09704566075", "Mon–Fri, 9am–11pm"], icon: "📞" },
               ].map(({ label, lines, icon }) => (
                 <div key={label} className="flex gap-4 rounded-xl p-4 bg-white/[0.03] border border-blue-600/15">
                   <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg text-sm bg-teal-500/10 border border-teal-500/25">

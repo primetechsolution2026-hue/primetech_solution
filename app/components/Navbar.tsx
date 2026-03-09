@@ -43,18 +43,18 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             <a
               href="#contact"
-              className="hidden text-sm font-medium text-blue-200/70 hover:text-teal-400 transition-colors duration-200 sm:inline"
+              className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-600 hover:to-teal-500 border border-teal-400/30 shadow-lg shadow-blue-900/40 transition-all duration-200"
             >
               Contact Us
             </a>
 
             {/* ✅ Changed: now navigates to the quotation page */}
-            <Link
+            {/* <Link
               href="/pages/quote"
               className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-600 hover:to-teal-500 border border-teal-400/30 shadow-lg shadow-blue-900/40 transition-all duration-200"
             >
               Get a Quote
-            </Link>
+            </Link> */}
           </div>
         </div>
       </Container>

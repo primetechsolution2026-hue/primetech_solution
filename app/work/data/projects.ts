@@ -22,7 +22,7 @@ export const projects: Record<string, Project> = {
   "logita-heights-hotel": {
     slug: "logita-heights-hotel",
     tag: "Property Management System",
-    title: "Logita Heights Hotel fgfg",
+    title: "Logita Heights Hotel",
     subtitle: "A full-featured hotel PMS built for scale and simplicity.",
     desc: "Built a Property Management System using React.js and Material-UI (MUI). Developed features like Check-in/Check-out, online booking, employee scheduling, payroll, and biometric attendance tracking. Designed responsive UIs, integrated RESTful APIs, and collaborated with backend teams to optimize performance. Delivered a scalable, user-friendly solution that enhanced operational efficiency.",
     coverImage: "/portfolio/pms/dashboard.png",

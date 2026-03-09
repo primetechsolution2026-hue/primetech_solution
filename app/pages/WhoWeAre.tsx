@@ -21,7 +21,7 @@ export function WhoWeAre() {
               <div className="absolute inset-0 bg-gradient-to-br from-blue-800/20 to-transparent pointer-events-none" />
             </div>
             {/* Floating badge */}
-            <div className="absolute -bottom-4 -right-4 rounded-xl px-4 py-3 bg-gradient-to-br from-blue-700 to-teal-500 shadow-lg shadow-teal-900/40">
+            <div hidden className="absolute -bottom-4 -right-4 rounded-xl px-4 py-3 bg-gradient-to-br from-blue-700 to-teal-500 shadow-lg shadow-teal-900/40">
               <p className="text-xs font-bold text-white">Est. 2018</p>
               <p className="text-xs text-white/75">5+ Years of Excellence</p>
             </div>
@@ -48,10 +48,10 @@ export function WhoWeAre() {
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {[
-                { value: "150+", label: "Projects Delivered" },
+                { value: "1", label: "Projects Delivered" },
                 { value: "99%", label: "Client Satisfaction" },
-                { value: "50+", label: "Expert Engineers" },
-                { value: "5+", label: "Years of Experience" },
+                { value: "10", label: "Expert Engineers" },
+                { value: "3+", label: "Years of Experience" },
               ].map(({ value, label }) => (
                 <div
                   key={label}
