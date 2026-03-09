@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Container } from "../components/Container";
-import Image from "next/image";
 import { getFirestore, collection, getDocs, orderBy, query } from "firebase/firestore";
 import { app } from "../../lib/firebase";
 
@@ -78,11 +77,11 @@ function ProfileModal({ member, onClose }: { member: Profile; onClose: () => voi
           >
             <div className="relative w-full h-full rounded-full overflow-hidden" style={{ background: "#020b18" }}>
               {member.profileImageUrl ? (
-                <Image
+                // ✅ Using <img> instead of next/image to avoid domain whitelist issues with Vercel Blob
+                <img
                   src={member.profileImageUrl}
                   alt={member.fullName ?? ""}
-                  fill
-                  className="object-cover object-top rounded-full"
+                  className="w-full h-full object-cover object-top rounded-full"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center" style={{ background: "rgba(45,212,191,0.08)" }}>
@@ -300,10 +299,10 @@ export function Team() {
                       >
                         <div className="relative h-full w-full rounded-full overflow-hidden" style={{ background: "#020b18" }}>
                           {member.profileImageUrl ? (
-                            <Image
+                            // ✅ Using <img> instead of next/image to avoid domain whitelist issues with Vercel Blob
+                            <img
                               src={member.profileImageUrl}
                               alt={member.fullName ?? ""}
-                              fill
                               className="w-full h-full object-cover object-top rounded-full"
                             />
                           ) : (
