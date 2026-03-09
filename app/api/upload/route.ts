@@ -1,5 +1,5 @@
-// app/api/upload/route.ts
 import { NextRequest, NextResponse } from "next/server";
+import { put } from "@vercel/blob";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 
@@ -12,20 +12,33 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
+    // Sanitize filename
+    const filename = `${Date.now()}_${file.name.replace(/\s+/g, "_")}`;
+
+    // ─── VERCEL (live) → use Vercel Blob ──────────────────────────────────────
+    if (process.env.VERCEL) {
+      const blob = await put(`profiles/${filename}`, file, {
+        access: "public",
+      });
+      return NextResponse.json({ url: blob.url });
+    }
+
+    // ─── LOCAL → save to public/uploads ───────────────────────────────────────
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Create uploads folder inside public if it doesn't exist
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-    await mkdir(uploadsDir, { recursive: true });
+    const uploadDir = path.join(process.cwd(), "public", "uploads");
 
-    // Unique filename using timestamp
-    const filename = `${Date.now()}_${file.name.replace(/\s+/g, "_")}`;
-    const filepath = path.join(uploadsDir, filename);
+    // Create uploads folder if it doesn't exist
+    await mkdir(uploadDir, { recursive: true });
 
-    await writeFile(filepath, buffer);
+    const filePath = path.join(uploadDir, filename);
+    await writeFile(filePath, buffer);
 
-    return NextResponse.json({ filename, url: `/uploads/${filename}` });
+    // Return a URL that the browser can access
+    const url = `/uploads/${filename}`;
+    return NextResponse.json({ url });
+
   } catch (error) {
     console.error("Upload error:", error);
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });

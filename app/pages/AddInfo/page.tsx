@@ -17,10 +17,12 @@ import { app } from "../../../lib/firebase";
 
 const db = getFirestore(app);
 
+// ✅ NO Firebase Storage imports needed anymore
+
 const TECH_OPTIONS = [
   "React", "Next.js", "TypeScript", "JavaScript", "Node.js",
   "Python", "Flutter", "React Native", "Vue.js", "Angular",
-  "Laravel", "PHP", "MySQL", "PostgreSQL", "MongoDB", "Hobspot",
+  "Laravel", "PHP", "MySQL", "PostgreSQL", "MongoDB", "Hubspot",
   "Firebase", "AWS", "Docker", "Git", "Figma", "WordPress", "Webflow",
   "Tailwind CSS", "GraphQL", "REST API", "Redux", "Swift",
 ];
@@ -36,7 +38,6 @@ interface FormData {
 interface Profile extends FormData {
   id: string;
   profileImageUrl: string;
-  profileImageName?: string;
 }
 
 const emptyForm: FormData = {
@@ -46,6 +47,27 @@ const emptyForm: FormData = {
   techStack: [],
   yearExperience: "",
 };
+
+// ─── Upload via Next.js API route ─────────────────────────────────────────────
+// Local dev : saves to /public/uploads/ → served as /uploads/filename.jpg
+// Vercel    : saves to Vercel Blob      → served as https://...vercel-storage.com/...
+async function uploadImage(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch("/api/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error ?? "Upload failed");
+  }
+
+  const data = await res.json();
+  return data.url;
+}
 
 // ─── Modal ────────────────────────────────────────────────────────────────────
 function ProfileModal({
@@ -114,16 +136,9 @@ function ProfileModal({
     setError("");
     try {
       let profileImageUrl = editTarget?.profileImageUrl ?? "";
-      let profileImageName = editTarget?.profileImageName ?? "";
 
       if (imageFile) {
-        const formData = new FormData();
-        formData.append("file", imageFile);
-        const res = await fetch("/api/upload", { method: "POST", body: formData });
-        if (!res.ok) throw new Error("Image upload failed");
-        const data = await res.json();
-        profileImageUrl = data.url;
-        profileImageName = data.filename;
+        profileImageUrl = await uploadImage(imageFile);
       }
 
       if (isEdit && editTarget) {
@@ -134,10 +149,9 @@ function ProfileModal({
           techStack: form.techStack,
           yearExperience: Number(form.yearExperience),
           profileImageUrl,
-          profileImageName,
           updatedAt: serverTimestamp(),
         });
-        onSaved({ ...form, id: editTarget.id, profileImageUrl, profileImageName });
+        onSaved({ ...form, id: editTarget.id, profileImageUrl });
       } else {
         const docRef = await addDoc(collection(db, "profiles"), {
           fullName: form.fullName,
@@ -146,14 +160,14 @@ function ProfileModal({
           techStack: form.techStack,
           yearExperience: Number(form.yearExperience),
           profileImageUrl,
-          profileImageName,
           createdAt: serverTimestamp(),
         });
-        onSaved({ ...form, id: docRef.id, profileImageUrl, profileImageName });
+        onSaved({ ...form, id: docRef.id, profileImageUrl });
       }
-    } catch (e) {
-      console.error("Error:", e);
-      setError("Failed to save. Please try again.");
+    } catch (e: unknown) {
+      console.error("Save error:", e);
+      const message = e instanceof Error ? e.message : "Unknown error";
+      setError(`Failed to save: ${message}`);
     } finally {
       setLoading(false);
     }
@@ -174,20 +188,15 @@ function ProfileModal({
           boxShadow: "0 40px 100px rgba(0,0,0,0.7)",
         }}
       >
-        {/* Top accent */}
         <div className="absolute top-0 left-[15%] right-[15%] h-px"
           style={{ background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.6), transparent)" }} />
 
-        {/* Close */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-300 transition text-sm"
           style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(148,163,184,0.1)" }}
-        >
-          ✕
-        </button>
+        >✕</button>
 
-        {/* Header */}
         <div className="text-center mb-7">
           <div className="inline-flex items-center gap-2 mb-2">
             <span className="h-px w-6 bg-gradient-to-r from-transparent to-teal-400/70" />
@@ -202,7 +211,6 @@ function ProfileModal({
           </p>
         </div>
 
-        {/* Avatar */}
         <div className="flex flex-col items-center mb-7 gap-3">
           <div
             className="relative w-[100px] h-[100px] rounded-full flex items-center justify-center cursor-pointer overflow-visible"
@@ -241,7 +249,6 @@ function ProfileModal({
           )}
         </div>
 
-        {/* Fields */}
         <div className="grid grid-cols-2 gap-4">
           <label className="flex flex-col gap-1.5 text-xs font-medium text-slate-400">
             Full Name <span className="text-teal-400 inline">*</span>
@@ -309,9 +316,7 @@ function ProfileModal({
                       ? { background: "rgba(45,212,191,0.08)", border: "1px solid rgba(45,212,191,0.3)" }
                       : { background: "transparent", border: "1px solid rgba(148,163,184,0.1)" }
                   }
-                >
-                  {tech}
-                </button>
+                >{tech}</button>
               ))}
             </div>
           </div>
@@ -364,7 +369,6 @@ function ProfileCard({
         style={{ background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.35), transparent)" }} />
 
       <div className="p-5 flex flex-col items-center text-center gap-3 flex-1">
-        {/* Avatar */}
         <div className="relative w-20 h-20 flex-shrink-0">
           {profile.profileImageUrl ? (
             <>
@@ -386,7 +390,6 @@ function ProfileCard({
           )}
         </div>
 
-        {/* Info */}
         <div className="flex flex-col gap-1">
           <h3 className="text-sm font-bold text-sky-50 leading-tight">{profile.fullName}</h3>
           <span className="text-[10px] font-semibold tracking-widest uppercase text-teal-400/80">{profile.position}</span>
@@ -397,12 +400,10 @@ function ProfileCard({
           )}
         </div>
 
-        {/* Description */}
         {profile.description && (
           <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2">{profile.description}</p>
         )}
 
-        {/* Tech Stack */}
         {profile.techStack.length > 0 && (
           <div className="flex flex-wrap justify-center gap-1 mt-auto pt-1">
             {profile.techStack.slice(0, 4).map(t => (
@@ -421,15 +422,12 @@ function ProfileCard({
         )}
       </div>
 
-      {/* Actions */}
       <div className="flex border-t" style={{ borderColor: "rgba(148,163,184,0.08)" }}>
         <button
           onClick={() => onEdit(profile)}
           className="flex-1 py-2.5 text-[11px] font-semibold text-slate-400 hover:text-teal-300 transition"
           style={{ borderRight: "1px solid rgba(148,163,184,0.08)" }}
-        >
-          Edit
-        </button>
+        >Edit</button>
 
         {confirmDelete ? (
           <div className="flex flex-1">
@@ -437,23 +435,17 @@ function ProfileCard({
               onClick={() => onDelete(profile.id)}
               className="flex-1 py-2.5 text-[11px] font-semibold text-red-400 hover:text-red-300 transition"
               style={{ borderRight: "1px solid rgba(148,163,184,0.08)" }}
-            >
-              Confirm
-            </button>
+            >Confirm</button>
             <button
               onClick={() => setConfirmDelete(false)}
               className="flex-1 py-2.5 text-[11px] font-semibold text-slate-500 hover:text-slate-400 transition"
-            >
-              Cancel
-            </button>
+            >Cancel</button>
           </div>
         ) : (
           <button
             onClick={() => setConfirmDelete(true)}
             className="flex-1 py-2.5 text-[11px] font-semibold text-slate-500 hover:text-red-400 transition"
-          >
-            Delete
-          </button>
+          >Delete</button>
         )}
       </div>
     </div>
@@ -483,7 +475,6 @@ export default function AddInfo() {
             techStack: Array.isArray(raw.techStack) ? raw.techStack : [],
             yearExperience: raw.yearExperience?.toString() ?? "",
             profileImageUrl: raw.profileImageUrl ?? "",
-            profileImageName: raw.profileImageName ?? "",
           };
         });
         setProfiles(data);
@@ -521,13 +512,10 @@ export default function AddInfo() {
     <div className="min-h-screen relative overflow-hidden"
       style={{ background: "linear-gradient(160deg, #020b18 0%, #040f1f 40%, #010a15 100%)" }}>
 
-      {/* Orbs */}
       <div className="fixed top-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{ background: "radial-gradient(ellipse at top right, rgba(14,165,233,0.07) 0%, transparent 70%)" }} />
       <div className="fixed bottom-0 left-0 w-[700px] h-[700px] rounded-full pointer-events-none"
         style={{ background: "radial-gradient(ellipse at bottom left, rgba(20,184,166,0.05) 0%, transparent 70%)" }} />
-
-      {/* Grid */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.02]"
         style={{
           backgroundImage: "linear-gradient(rgba(148,163,184,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.5) 1px, transparent 1px)",
@@ -535,8 +523,6 @@ export default function AddInfo() {
         }} />
 
       <div className="relative max-w-6xl mx-auto px-6 py-12">
-
-        {/* Page Header */}
         <div className="flex items-end justify-between mb-10">
           <div>
             <div className="inline-flex items-center gap-2 mb-2">
@@ -550,7 +536,6 @@ export default function AddInfo() {
                 : `${profiles.length} profile${profiles.length !== 1 ? "s" : ""} found`}
             </p>
           </div>
-
           <button
             onClick={openAdd}
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold tracking-wide text-[#020b18] transition hover:-translate-y-0.5"
@@ -560,11 +545,9 @@ export default function AddInfo() {
           </button>
         </div>
 
-        {/* Divider */}
         <div className="mb-8 h-px w-full"
           style={{ background: "linear-gradient(90deg, transparent, rgba(45,212,191,0.2), transparent)" }} />
 
-        {/* Cards */}
         {loadingProfiles ? (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
             <div className="w-8 h-8 rounded-full border-2 border-teal-400/30 border-t-teal-400 animate-spin" />
@@ -597,7 +580,6 @@ export default function AddInfo() {
         )}
       </div>
 
-      {/* Modal */}
       {modalOpen && (
         <ProfileModal
           editTarget={editTarget}
