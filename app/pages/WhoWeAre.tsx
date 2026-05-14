@@ -32,26 +32,37 @@ export function WhoWeAre() {
             <span className="inline-block text-xs font-bold tracking-widest uppercase text-teal-400 mb-3">
               About Us
             </span>
+
             <h2 className="text-2xl font-extrabold tracking-tight text-blue-50 sm:text-3xl lg:text-4xl">
               Who we are
             </h2>
+
             <div className="mt-2 h-1 w-12 rounded-full bg-gradient-to-r from-blue-700 to-teal-400" />
 
             <p className="mt-5 text-sm leading-relaxed text-blue-200/70">
-              PrimeTech Solutions is a full-service web development agency dedicated to
-              building scalable, high-performance web solutions that drive real business results.
+              PrimeTech Solutions is a full-service web and mobile application development agency focused on delivering scalable, secure, and high-performance digital solutions for businesses of all sizes. We specialize in custom websites, web applications, mobile apps, CRM systems, and enterprise-grade platforms tailored to modern business needs.
             </p>
+
+            <p className="mt-3 text-sm leading-relaxed text-blue-200/70 mb-6">
+              By combining modern technologies with strategic and user-focused design, we create reliable digital products that improve efficiency, strengthen online presence, and support long-term business growth.
+            </p>
+
             <p className="mt-3 text-sm leading-relaxed text-blue-200/70">
-              Our mission is to empower businesses by providing robust digital
-              infrastructure that drives growth and competitive advantage.
+              <span className="font-semibold text-teal-400">Mission</span><br/>
+              <span>To empower businesses through innovative, scalable, and secure web and mobile solutions that drive growth, efficiency, and digital transformation.</span>
+            </p>
+
+            <p className="mt-3 text-sm leading-relaxed text-blue-200/70">
+              <span className="font-semibold text-teal-400">Vision</span> <br/>
+              <span>To become a trusted global technology partner recognized for delivering reliable, future-ready, and business-driven digital solutions across web and mobile platforms.</span>
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {[
                 { value: "1", label: "Projects Delivered" },
-                { value: "99%", label: "Client Satisfaction" },
-                { value: "10", label: "Expert Engineers" },
-                { value: "3+", label: "Years of Experience" },
+                // { value: "99%", label: "Client Satisfaction" },
+                { value: "6", label: "Expert Developers" },
+                // { value: "3+", label: "Years of Experience" },
               ].map(({ value, label }) => (
                 <div
                   key={label}

@@ -3,6 +3,7 @@ import { Hero } from "./pages/Hero";
 import { WhoWeAre } from "./pages/WhoWeAre";
 import { Services } from "./pages/Services";
 import { FeaturedWork } from "./pages/FeaturedWork";
+import  ReviewsDisplay  from "./pages/ReviewsDisplay";
 import { Team } from "./pages/Team";
 import { Contact } from "./pages/Contact";
 import { Footer } from "./components/Footer";
@@ -16,6 +17,7 @@ export default function Page() {
         <WhoWeAre />
         <Services />
         <FeaturedWork />
+        <ReviewsDisplay />
         <Team />
         <Contact />
       </main>
