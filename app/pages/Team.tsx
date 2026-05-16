@@ -7,6 +7,8 @@ import { app } from "../../lib/firebase";
 
 const db = getFirestore(app);
 
+type ExperienceUnit = "years" | "months";
+
 interface Profile {
   id: string;
   fullName: string;
@@ -14,7 +16,29 @@ interface Profile {
   description: string;
   techStack: string[];
   yearExperience: number;
+  experienceUnit?: ExperienceUnit;
   profileImageUrl: string;
+}
+
+// ─── Experience Display Helper ─────────────────────────────────────────────────
+function formatExperience(value: number, unit: ExperienceUnit = "years"): string {
+  if (!value || isNaN(value)) return "";
+
+  if (unit === "months") {
+    if (value < 1) return "< 1 mo of experience";
+    return `${value} month${value !== 1 ? "s" : ""} of experience`;
+  }
+  return `${value} year${value !== 1 ? "s" : ""} of experience`;
+}
+
+function formatExperienceShort(value: number, unit: ExperienceUnit = "years"): string {
+  if (!value || isNaN(value)) return "";
+
+  if (unit === "months") {
+    if (value < 1) return "< 1 mo exp";
+    return `${value} mo${value !== 1 ? "s" : ""} exp`;
+  }
+  return `${value} yr${value !== 1 ? "s" : ""} exp`;
 }
 
 // ─── Profile Modal ────────────────────────────────────────────────────────────
@@ -34,6 +58,8 @@ function ProfileModal({ member, onClose }: { member: Profile; onClose: () => voi
   const handleBackdrop = (e: React.MouseEvent) => {
     if (e.target === backdropRef.current) onClose();
   };
+
+  const expLabel = formatExperience(member.yearExperience, member.experienceUnit ?? "years");
 
   return (
     <div
@@ -77,7 +103,6 @@ function ProfileModal({ member, onClose }: { member: Profile; onClose: () => voi
           >
             <div className="relative w-full h-full rounded-full overflow-hidden" style={{ background: "#020b18" }}>
               {member.profileImageUrl ? (
-                // ✅ Using <img> instead of next/image to avoid domain whitelist issues with Vercel Blob
                 <img
                   src={member.profileImageUrl}
                   alt={member.fullName ?? ""}
@@ -104,9 +129,7 @@ function ProfileModal({ member, onClose }: { member: Profile; onClose: () => voi
             {member.position}
           </span>
           {member.yearExperience > 0 && (
-            <p className="text-xs text-slate-500">
-              {member.yearExperience} year{member.yearExperience !== 1 ? "s" : ""} of experience
-            </p>
+            <p className="text-xs text-slate-500">{expLabel}</p>
           )}
         </div>
 
@@ -254,12 +277,12 @@ export function Team() {
 
           {/* Loading Skeletons */}
           {loading && (
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="flex flex-wrap justify-center gap-4">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div
                   key={i}
                   className="rounded-2xl animate-pulse"
-                  style={{ height: 180, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(148,163,184,0.06)" }}
+                  style={{ width: 200, height: 180, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(148,163,184,0.06)" }}
                 />
               ))}
             </div>
@@ -274,11 +297,12 @@ export function Team() {
 
           {/* Team Grid */}
           {!loading && team.length > 0 && (
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="flex flex-wrap justify-center gap-4">
               {team.map((member) => (
                 <div
                   key={member.id}
                   className="group relative"
+                  style={{ width: "clamp(160px, 18%, 220px)", flexShrink: 0, flexGrow: 0 }}
                   onClick={() => setSelected(member)}
                 >
                   <div className="team-card relative rounded-2xl p-5 text-center">
@@ -299,7 +323,6 @@ export function Team() {
                       >
                         <div className="relative h-full w-full rounded-full overflow-hidden" style={{ background: "#020b18" }}>
                           {member.profileImageUrl ? (
-                            // ✅ Using <img> instead of next/image to avoid domain whitelist issues with Vercel Blob
                             <img
                               src={member.profileImageUrl}
                               alt={member.fullName ?? ""}
@@ -331,7 +354,7 @@ export function Team() {
 
                     {member.yearExperience > 0 && (
                       <p className="mt-2 text-[10px] text-slate-500">
-                        {member.yearExperience} yr{member.yearExperience !== 1 ? "s" : ""} exp
+                        {formatExperienceShort(member.yearExperience, member.experienceUnit ?? "years")}
                       </p>
                     )}
 

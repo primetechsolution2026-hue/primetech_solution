@@ -17,8 +17,6 @@ import { app } from "../../../lib/firebase";
 
 const db = getFirestore(app);
 
-// ✅ NO Firebase Storage imports needed anymore
-
 const TECH_OPTIONS = [
   "React", "Next.js", "TypeScript", "JavaScript", "Node.js",
   "Python", "Flutter", "React Native", "Vue.js", "Angular",
@@ -27,12 +25,15 @@ const TECH_OPTIONS = [
   "Tailwind CSS", "GraphQL", "REST API", "Redux", "Swift",
 ];
 
+type ExperienceUnit = "years" | "months";
+
 interface FormData {
   fullName: string;
   position: string;
   description: string;
   techStack: string[];
   yearExperience: string;
+  experienceUnit: ExperienceUnit;
 }
 
 interface Profile extends FormData {
@@ -46,11 +47,9 @@ const emptyForm: FormData = {
   description: "",
   techStack: [],
   yearExperience: "",
+  experienceUnit: "years",
 };
 
-// ─── Upload via Next.js API route ─────────────────────────────────────────────
-// Local dev : saves to /public/uploads/ → served as /uploads/filename.jpg
-// Vercel    : saves to Vercel Blob      → served as https://...vercel-storage.com/...
 async function uploadImage(file: File): Promise<string> {
   const formData = new FormData();
   formData.append("file", file);
@@ -67,6 +66,58 @@ async function uploadImage(file: File): Promise<string> {
 
   const data = await res.json();
   return data.url;
+}
+
+// ─── Experience Display Helper ─────────────────────────────────────────────────
+function formatExperience(value: string | number, unit: ExperienceUnit): string {
+  const num = Number(value);
+  if (!value || isNaN(num)) return "";
+
+  if (unit === "months") {
+    if (num < 1) return "< 1 mo";
+    return `${num} mo${num !== 1 ? "s" : ""} exp`;
+  }
+  return `${num} yr${num !== 1 ? "s" : ""} exp`;
+}
+
+// ─── Unit Toggle ───────────────────────────────────────────────────────────────
+function UnitToggle({
+  value,
+  onChange,
+}: {
+  value: ExperienceUnit;
+  onChange: (u: ExperienceUnit) => void;
+}) {
+  return (
+    <div
+      className="flex rounded-lg overflow-hidden shrink-0"
+      style={{ border: "1px solid rgba(148,163,184,0.15)" }}
+    >
+      {(["years", "months"] as ExperienceUnit[]).map((unit) => (
+        <button
+          key={unit}
+          type="button"
+          onClick={() => onChange(unit)}
+          className="px-3 py-2 text-[11px] font-semibold tracking-wide transition capitalize"
+          style={
+            value === unit
+              ? {
+                  background: "linear-gradient(135deg, rgba(14,165,233,0.25), rgba(45,212,191,0.25))",
+                  color: "#2dd4bf",
+                  borderRight: unit === "years" ? "1px solid rgba(148,163,184,0.15)" : undefined,
+                }
+              : {
+                  background: "transparent",
+                  color: "rgba(148,163,184,0.5)",
+                  borderRight: unit === "years" ? "1px solid rgba(148,163,184,0.15)" : undefined,
+                }
+          }
+        >
+          {unit === "years" ? "Yrs" : "Mos"}
+        </button>
+      ))}
+    </div>
+  );
 }
 
 // ─── Modal ────────────────────────────────────────────────────────────────────
@@ -88,6 +139,7 @@ function ProfileModal({
           description: editTarget.description,
           techStack: editTarget.techStack,
           yearExperience: editTarget.yearExperience,
+          experienceUnit: editTarget.experienceUnit ?? "years",
         }
       : emptyForm
   );
@@ -127,6 +179,9 @@ function ProfileModal({
     setImagePreview(URL.createObjectURL(file));
   };
 
+  // Max value depends on unit
+  const expMax = form.experienceUnit === "months" ? 600 : 50;
+
   const handleSubmit = async () => {
     if (!form.fullName || !form.position) {
       setError("Full Name and Position are required.");
@@ -141,25 +196,25 @@ function ProfileModal({
         profileImageUrl = await uploadImage(imageFile);
       }
 
+      const payload = {
+        fullName: form.fullName,
+        position: form.position,
+        description: form.description,
+        techStack: form.techStack,
+        yearExperience: Number(form.yearExperience),
+        experienceUnit: form.experienceUnit,
+        profileImageUrl,
+      };
+
       if (isEdit && editTarget) {
         await updateDoc(doc(db, "profiles", editTarget.id), {
-          fullName: form.fullName,
-          position: form.position,
-          description: form.description,
-          techStack: form.techStack,
-          yearExperience: Number(form.yearExperience),
-          profileImageUrl,
+          ...payload,
           updatedAt: serverTimestamp(),
         });
         onSaved({ ...form, id: editTarget.id, profileImageUrl });
       } else {
         const docRef = await addDoc(collection(db, "profiles"), {
-          fullName: form.fullName,
-          position: form.position,
-          description: form.description,
-          techStack: form.techStack,
-          yearExperience: Number(form.yearExperience),
-          profileImageUrl,
+          ...payload,
           createdAt: serverTimestamp(),
         });
         onSaved({ ...form, id: docRef.id, profileImageUrl });
@@ -211,6 +266,7 @@ function ProfileModal({
           </p>
         </div>
 
+        {/* Profile Photo */}
         <div className="flex flex-col items-center mb-7 gap-3">
           <div
             className="relative w-[100px] h-[100px] rounded-full flex items-center justify-center cursor-pointer overflow-visible"
@@ -272,17 +328,34 @@ function ProfileModal({
             />
           </label>
 
-          <label className="col-span-2 flex flex-col gap-1.5 text-xs font-medium text-slate-400">
-            Years of Experience
-            <input
-              type="number" min={0} max={50}
-              className="w-full px-3.5 py-3 rounded-xl text-sm text-sky-100 placeholder-slate-600 focus:outline-none"
-              style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(148,163,184,0.1)" }}
-              placeholder="e.g. 3"
-              value={form.yearExperience}
-              onChange={update("yearExperience")}
-            />
-          </label>
+          {/* ── Experience row with unit toggle ── */}
+          <div className="col-span-2 flex flex-col gap-1.5">
+            <span className="text-xs font-medium text-slate-400">Experience</span>
+            <div className="flex gap-2 items-stretch">
+              <input
+                type="number"
+                min={0}
+                max={expMax}
+                className="flex-1 px-3.5 py-3 rounded-xl text-sm text-sky-100 placeholder-slate-600 focus:outline-none"
+                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(148,163,184,0.1)" }}
+                placeholder={form.experienceUnit === "months" ? "e.g. 8" : "e.g. 3"}
+                value={form.yearExperience}
+                onChange={update("yearExperience")}
+              />
+              <UnitToggle
+                value={form.experienceUnit}
+                onChange={(u) => setForm((prev) => ({ ...prev, experienceUnit: u, yearExperience: "" }))}
+              />
+            </div>
+            {/* Live preview */}
+            {form.yearExperience && (
+              <span className="text-[11px] text-teal-400/70 pl-1">
+                Preview: <span className="text-teal-300 font-semibold">
+                  {formatExperience(form.yearExperience, form.experienceUnit)}
+                </span>
+              </span>
+            )}
+          </div>
 
           <label className="col-span-2 flex flex-col gap-1.5 text-xs font-medium text-slate-400">
             Description
@@ -395,7 +468,7 @@ function ProfileCard({
           <span className="text-[10px] font-semibold tracking-widest uppercase text-teal-400/80">{profile.position}</span>
           {profile.yearExperience && (
             <span className="text-[11px] text-slate-500">
-              {profile.yearExperience} yr{Number(profile.yearExperience) !== 1 ? "s" : ""} exp
+              {formatExperience(profile.yearExperience, profile.experienceUnit ?? "years")}
             </span>
           )}
         </div>
@@ -474,6 +547,7 @@ export default function AddInfo() {
             description: raw.description ?? "",
             techStack: Array.isArray(raw.techStack) ? raw.techStack : [],
             yearExperience: raw.yearExperience?.toString() ?? "",
+            experienceUnit: (raw.experienceUnit as ExperienceUnit) ?? "years",
             profileImageUrl: raw.profileImageUrl ?? "",
           };
         });
