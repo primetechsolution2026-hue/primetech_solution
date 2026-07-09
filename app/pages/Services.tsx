@@ -1,12 +1,36 @@
 import { Container } from "../components/Container";
 
 const services = [
-  { title: "Frontend Development", desc: "Responsive, accessible, and interactive user interfaces using React, Vue, and modern CSS frameworks.", icon: "⌘" },
-  { title: "Backend Engineering", desc: "Secure, scalable, and high-performance server architectures using Node.js, Python, and scalable databases.", icon: "⛭" },
-  { title: "E-Commerce Solutions", desc: "Custom online stores and headless commerce setups optimized for conversion and seamless checkout.", icon: "🛒" },
-  { title: "Progressive Web Apps", desc: "App-like experiences in the browser that work offline and engage users with push notifications.", icon: "⬚" },
-  { title: "Cloud Infrastructure", desc: "Cloud migration, DevOps, and reliable hosting setups on AWS, Google Cloud, and Azure.", icon: "☁" },
-  { title: "UI/UX Design", desc: "User-centered design processes that result in intuitive and visually stunning digital products.", icon: "✦" },
+  { 
+    title: "Frontend Development", 
+    desc: "Responsive, accessible, and interactive user interfaces using React, Next.js, and modern CSS frameworks.", 
+    icon: "⌘" 
+  },
+  { 
+    title: "Backend Engineering", 
+    desc: "Secure, scalable, and high-performance server architectures using Node.js, Laravel, PHP, and scalable databases.", 
+    icon: "⛭" 
+  },
+  { 
+    title: "CRM", 
+    desc: "Custom CRM solutions and WordPress integrations to manage leads, automate workflows, track customer interactions, and improve sales processes using tools like HubSpot, Salesforce, and WooCommerce CRM plugins.", 
+    icon: "🛒" 
+  },
+  // { 
+  //   title: "Progressive Web Apps", 
+  //   desc: "App-like experiences in the browser that work offline and engage users with push notifications.", 
+  //   icon: "⬚" 
+  // },
+  // { 
+  //   title: "Cloud Infrastructure", 
+  //   desc: "Cloud migration, DevOps, and reliable hosting setups on AWS, Google Cloud, and Azure.", 
+  //   icon: "☁" 
+  // },
+  // { 
+  //   title: "UI/UX Design", 
+  //   desc: "User-centered design processes that result in intuitive and visually stunning digital products.", 
+  //   icon: "✦" 
+  // },
 ];
 
 export function Services() {

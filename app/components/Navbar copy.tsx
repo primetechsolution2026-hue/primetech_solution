@@ -23,6 +23,9 @@ export function Navbar() {
   const [hasReviews, setHasReviews] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Smooth interpolated logo size: 100px → 64px over first 80px of scroll
+  const [logoSize, setLogoSize] = useState(100);
+
   useEffect(() => {
     const check = async () => {
       try {
@@ -33,6 +36,23 @@ export function Navbar() {
       }
     };
     check();
+  }, []);
+
+  // Smoothly shrink logo based on scroll position — no binary jump
+  useEffect(() => {
+    const MIN_SIZE = 64;
+    const MAX_SIZE = 100;
+    const SCROLL_RANGE = 80; // px of scroll over which size transitions
+
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      const ratio = Math.min(scrollY / SCROLL_RANGE, 1); // 0 → 1
+      const size = MAX_SIZE - ratio * (MAX_SIZE - MIN_SIZE); // 100 → 64
+      setLogoSize(size);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   // Close menu on resize to desktop
@@ -58,16 +78,21 @@ export function Navbar() {
         <Container>
           <div className="flex h-auto items-center justify-between">
 
-            {/* Logo */}
-            <div className="flex h-auto items-center py-1">
+            {/* Logo — smoothly shrinks on scroll */}
+            <div className="h-auto items-center relative">
               <Link href="/" className="flex items-center shrink-0">
                 <Image
                   src="/images/PrimeTech.png"
                   alt="PrimeTech Solutions Logo"
-                  width={80}
-                  height={60}
+                  width={logoSize}
+                  height={logoSize}
                   priority
-                  className=" object-contain"
+                  className="object-contain"
+                  style={{
+                    width: logoSize,
+                    height: logoSize,
+                    transition: "width 0.15s linear, height 0.15s linear",
+                  }}
                 />
               </Link>
             </div>
@@ -194,7 +219,7 @@ export function Navbar() {
               className="flex items-center justify-center w-full rounded-xl px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-600 hover:to-teal-500 border border-teal-400/30 transition-all duration-200"
             >
               Contact Us
-            </a> 
+            </a>
           </div>
         </nav>
       </div>
