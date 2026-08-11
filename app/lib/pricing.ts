@@ -1,13 +1,18 @@
-import { Feature, FeatureCategory } from "./features";
+import { Feature, FeatureCategory, TimelineOption } from "./features";
 
 export type QuoteTotals = {
-  oneTimeTotal: number;
+  oneTimeTotal: number; // features subtotal + rush fee
   monthlyTotal: number;
+  rushFee: number;
+  rushFeePercent: number;
   oneTimeItems: Array<{ name: string; price: number; category: FeatureCategory }>;
   monthlyItems: Array<{ name: string; monthly: number; category: FeatureCategory }>;
 };
 
-export function computeTotals(selected: Feature[]): QuoteTotals {
+export function computeTotals(
+  selected: Feature[],
+  timeline: TimelineOption
+): QuoteTotals {
   const oneTimeItems = selected
     .filter((f) => f.price > 0)
     .map((f) => ({ name: f.name, price: f.price, category: f.category }));
@@ -16,10 +21,22 @@ export function computeTotals(selected: Feature[]): QuoteTotals {
     .filter((f) => (f.monthly ?? 0) > 0)
     .map((f) => ({ name: f.name, monthly: f.monthly!, category: f.category }));
 
-  const oneTimeTotal = oneTimeItems.reduce((sum, x) => sum + x.price, 0);
+  const featuresSubtotal = oneTimeItems.reduce((sum, x) => sum + x.price, 0);
   const monthlyTotal = monthlyItems.reduce((sum, x) => sum + x.monthly, 0);
 
-  return { oneTimeTotal, monthlyTotal, oneTimeItems, monthlyItems };
+  // Rush fee applies only to one-time setup cost, not recurring maintenance.
+  const rushFeePercent = Math.round((timeline.multiplier - 1) * 100);
+  const rushFee = Math.round(featuresSubtotal * (timeline.multiplier - 1));
+  const oneTimeTotal = featuresSubtotal + rushFee;
+
+  return {
+    oneTimeTotal,
+    monthlyTotal,
+    rushFee,
+    rushFeePercent,
+    oneTimeItems,
+    monthlyItems,
+  };
 }
 
 // Optional: enforce single-choice categories (radio groups)
